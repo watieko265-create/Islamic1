@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RANZ Islamic Knowledge System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── VARIABLES ─────────────────────────────── */
+    :root {
+      --bg: #0a0c10;
+      --surface: #111520;
+      --surface2: #161b2e;
+      --border: #1e2840;
+      --gold: #c9a84c;
+      --gold-light: #f0d070;
+      --gold-dim: #7a6030;
+      --teal: #2dd4bf;
+      --teal-dim: #134e4a;
+      --text: #e8e0d0;
+      --text-dim: #8a8070;
+      --text-muted: #504840;
+      --green: #4ade80;
+      --red: #f87171;
+      --radius: 12px;
+      --glow: 0 0 30px rgba(201, 168, 76, 0.15);
+    }
+    .light {
+      --bg: #f5f0e8;
+      --surface: #fffdf7;
+      --surface2: #f0ebe0;
+      --border: #d4c9a8;
+      --text: #2a2015;
+      --text-dim: #6b5c40;
+      --text-muted: #a08060;
+      --glow: 0 0 30px rgba(201, 168, 76, 0.1);
+    }
+
+    /* ── RESET ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cairo', sans-serif;
+      min-height: 100vh;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* ── GEOMETRIC BACKGROUND ──────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(45,212,191,0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── BANNER ────────────────────────────────── */
+    #event-banner {
+      display: none;
+      background: linear-gradient(135deg, #c9a84c, #f0d070, #c9a84c);
+      color: #1a1200;
+      text-align: center;
+      padding: 12px 20px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 100;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+
+    /* ── HEADER ────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(10, 12, 16, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .light header { background: rgba(245, 240, 232, 0.92); }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      box-shadow: 0 0 20px rgba(201,168,76,0.4);
+    }
+    .logo-text {
+      line-height: 1;
+    }
+    .logo-text .brand {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+    .logo-text .sub {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+    nav a:hover, nav a.active {
+      color: var(--gold);
+      background: rgba(201,168,76,0.1);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-dim);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+    .btn-icon:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── HERO ──────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 80px 24px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-arabic {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: var(--gold);
+      margin-bottom: 16px;
+      opacity: 0.9;
+      text-shadow: 0 0 40px rgba(201,168,76,0.3);
+    }
+    .hero h1 {
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      max-width: 500px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    /* ── STATS ─────────────────────────────────── */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+      padding: 16px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      min-width: 100px;
+    }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--gold);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── MAIN LAYOUT ───────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── SECTION HEADER ────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::before {
+      content: '';
+      width: 3px;
+      height: 20px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* ── FILTER TABS ───────────────────────────── */
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold);
+    }
+    .filter-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #1a1200;
+    }
+
+    /* ── SEARCH ────────────────────────────────── */
+    .search-wrap {
+      position: relative;
+    }
+    .search-wrap input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.85rem;
+      padding: 8px 14px 8px 36px;
+      width: 200px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-wrap input:focus {
+      border-color: var(--gold);
+      width: 240px;
+    }
+    .search-wrap::before {
+      content: '🔍';
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+    }
+
+    /* ── ILMU GRID ─────────────────────────────── */
+    .ilmu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-2px);
+      box-shadow: var(--glow);
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+    .card-kategori {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .kat-dzikir { background: rgba(45,212,191,0.15); color: #2dd4bf; }
+    .kat-alquran { background: rgba(201,168,76,0.15); color: #c9a84c; }
+    .kat-fiqih { background: rgba(74,222,128,0.15); color: #4ade80; }
+    .kat-aqidah { background: rgba(167,139,250,0.15); color: #a78bfa; }
+    .kat-akhir { background: rgba(248,113,113,0.15); color: #f87171; }
+    .kat-doa { background: rgba(251,191,36,0.15); color: #fbbf24; }
+
+    .card-date {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .card p {
+      font-size: 0.83rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-footer {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .btn-read {
+      font-size: 0.75rem;
+      color: var(--gold);
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Cairo', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── DZIKIR COUNTER ────────────────────────── */
+    .dzikir-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      max-width: 400px;
+      margin: 0 auto 40px;
+    }
+    .dzikir-arabic {
+      font-family: 'Amiri', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .dzikir-latin {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+      font-style: italic;
+    }
+    .dzikir-arti {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .dzikir-counter {
+      font-size: 4rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 20px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .dzikir-counter span {
+      font-size: 1rem;
+      color: var(--text-dim);
+      font-weight: 400;
+      display: block;
+      margin-top: 4px;
+    }
+    .dzikir-controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .btn-tap {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.1s;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+    }
+    .btn-tap:active { transform: scale(0.92); }
+    .btn-reset {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      cursor: pointer;
+      align-self: center;
+      transition: all 0.2s;
+    }
+    .btn-reset:hover { color: var(--red); border-color: var(--red); }
+
+    .dzikir-selector {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .dzikir-sel-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dzikir-sel-btn.active {
+      background: var(--teal-dim);
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    .dzikir-target {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: width 0.2s;
+    }
+
+    /* ── MODAL ─────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      place-items: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: grid; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.3s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 14px;
+      display: grid;
+      place-items: center;
+    }
+    .modal-kat {
+      margin-bottom: 12px;
+    }
+    .modal h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .modal-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .modal-isi {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.9;
+      white-space: pre-wrap;
+    }
+
+    /* ── QURAN SECTION ─────────────────────────── */
+    .quran-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .quran-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .quran-num {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #1a1200;
+      margin-bottom: 10px;
+    }
+    .quran-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .quran-latin {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-bottom: 2px;
+    }
+    .quran-info {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* ── EMPTY ─────────────────────────────────── */
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty p { font-size: 0.9rem; }
+
+    /* ── LOADING ───────────────────────────────── */
+    .loading {
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── NOTIFICATION ──────────────────────────── */
+    .notif {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--gold-dim);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 0.85rem;
+      color: var(--text);
+      z-index: 300;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      max-width: 280px;
+    }
+    .notif.show { transform: translateX(0); }
+
+    /* ── MODE TENANG ───────────────────────────── */
+    .calm-overlay {
+      position: fixed;
+      inset: 0;
+      background: #050708;
+      z-index: 500;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    .calm-overlay.active { display: flex; }
+    .calm-text {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: var(--gold);
+      text-align: center;
+      animation: breathe 4s ease-in-out infinite;
+      padding: 0 24px;
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.6; transform: scale(0.98); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+    .calm-close {
+      padding: 10px 24px;
+      border-radius: 20px;
+      border: 1px solid var(--gold-dim);
+      background: transparent;
+      color: var(--gold);
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    /* ── SCROLL TO TOP ─────────────────────────── */
+    .scroll-top {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 50;
+    }
+    .scroll-top.show { opacity: 1; }
+
+    /* ── PAGE SECTIONS ─────────────────────────── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .hero { padding: 50px 20px 40px; }
+      .ilmu-grid { grid-template-columns: 1fr; }
+      .search-wrap input, .search-wrap input:focus { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .stats { gap: 12px; }
+      .stat { padding: 12px 16px; }
+    }
+
+    /* ── MOBILE NAV ────────────────────────────── */
+    .mobile-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: none;
+      z-index: 80;
+      padding: 8px 0 12px;
+    }
+    @media (max-width: 768px) { .mobile-nav { display: flex; } }
+    .mobile-nav-items {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+    }
+    .mobile-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .mobile-nav-item .icon { font-size: 20px; }
+    .mobile-nav-item .label {
+      font-size: 0.58rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .mobile-nav-item.active .label { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .container { padding-bottom: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── EVENT BANNER ─────────────────────────── -->
+<div id="event-banner">🌙 Selamat Menyambut Bulan Suci Ramadhan 1446H — Semoga ibadah kita diterima Allah SWT</div>
+
+<!-- ── HEADER ───────────────────────────────── -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#" onclick="showPage('home')">
+      <div class="logo-icon">🕌</div>
+      <div class="logo-text">
+        <div class="brand">RANZ</div>
+        <div class="sub">Islamic Knowledge</div>
+      </div>
+    </a>
+    <nav id="main-nav">
+      <a href="#" onclick="showPage('home')" class="active" data-page="home">Home</a>
+      <a href="#" onclick="showPage('dzikir')" data-page="dzikir">Dzikir</a>
+      <a href="#" onclick="showPage('quran')" data-page="quran">Al-Qur'an</a>
+      <a href="#" onclick="showPage('fiqih')" data-page="fiqih">Fiqih</a>
+      <a href="#" onclick="showPage('aqidah')" data-page="aqidah">Aqidah</a>
+      <a href="#" onclick="showPage('akhir')" data-page="akhir">Akhir Zaman</a>
+      <a href="#" onclick="showPage('doa')" data-page="doa">Doa</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-icon" onclick="toggleDark()" title="Toggle Dark/Light">🌙</button>
+      <button class="btn-icon" onclick="openCalm()" title="Mode Tenang">😌</button>
+      <button class="btn-icon" onclick="loadIlmu()" title="Refresh">🔄</button>
+    </div>
+  </div>
+</header>
+
+<!-- ── MAIN ─────────────────────────────────── -->
+<main>
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <h1>RANZ <span>Islamic Knowledge</span> System</h1>
+      <p>Sarana belajar ilmu Islam yang terus diperbarui. Semoga menjadi amal jariyah yang mengalir tiada henti. 🤲</p>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-num" id="stat-ilmu">—</span>
+          <span class="stat-label">Ilmu</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="stat-kategori">6</span>
+          <span class="stat-label">Kategori</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Pahala</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">Semua Ilmu</div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <div class="filters" id="filter-home">
+            <button class="filter-btn active" onclick="filterIlmu('', this)">Semua</button>
+            <button class="filter-btn" onclick="filterIlmu('Dzikir', this)">📿 Dzikir</button>
+            <button class="filter-btn" onclick="filterIlmu('Al-Quran', this)">📖 Al-Quran</button>
+            <button class="filter-btn" onclick="filterIlmu('Fiqih', this)">⚖️ Fiqih</button>
+            <button class="filter-btn" onclick="filterIlmu('Aqidah', this)">🧠 Aqidah</button>
+            <button class="filter-btn" onclick="filterIlmu('Akhir Zaman', this)">🛡️ Akhir Zaman</button>
+            <button class="filter-btn" onclick="filterIlmu('Doa', this)">🤍 Doa</button>
+          </div>
+          <div class="search-wrap">
+            <input type="text" id="search-input" placeholder="Cari ilmu..." oninput="searchIlmu(this.value)">
+          </div>
+        </div>
+      </div>
+      <div id="ilmu-container">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DZIKIR PAGE -->
+  <div class="page" id="page-dzikir">
+    <div class="hero" style="padding-bottom:20px;">
+      <div class="hero-arabic">سُبْحَانَ اللَّه</div>
+      <h1>📿 Counter <span>Dzikir</span></h1>
+      <p>Perbanyak dzikir kepada Allah SWT dalam setiap keadaan.</p>
+    </div>
+    <div class="container">
+      <div class="dzikir-selector">
+        <button class="dzikir-sel-btn active" onclick="setDzikir(0, this)">Subhanallah</button>
+        <button class="dzikir-sel-btn" onclick="setDzikir(1, this)">Alhamdulillah</button>
+        <button class="dzikir-sel-btn" onclick="setDzikir(2, this)">Allahu Akbar</button>
+        <button class="dzikir-sel-btn" onclick="setDzikir(3, this)">Astaghfirullah</button>
+        <button class="dzikir-sel-btn" onclick="setDzikir(4, this)">Laa ilaha illallah</button>
+      </div>
+      <div class="dzikir-panel">
+        <div class="dzikir-arabic" id="dzikir-arabic">سُبْحَانَ اللَّه</div>
+        <div class="dzikir-latin" id="dzikir-latin">Subhanallah</div>
+        <div class="dzikir-arti" id="dzikir-arti">Maha Suci Allah</div>
+        <div class="dzikir-target" id="dzikir-target">Target: 33x</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+        <div class="dzikir-counter">
+          <div id="dzikir-count">0</div>
+          <span id="dzikir-session">sesi ini</span>
+        </div>
+        <div class="dzikir-controls">
+          <button class="btn-reset" onclick="resetDzikir()" title="Reset">↺</button>
+          <button class="btn-tap" onclick="tapDzikir()">☝️</button>
+        </div>
+      </div>
+
+      <!-- Dzikir Pagi Petang -->
+      <div class="section-header" style="margin-top:40px;">
+        <div class="section-title">Dzikir Pagi & Petang</div>
+      </div>
+      <div id="dzikir-ilmu-container">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AL-QURAN PAGE -->
+  <div class="page" id="page-quran">
+    <div class="hero" style="padding-bottom:20px;">
+      <div class="hero-arabic">الْقُرْآنُ الْكَرِيمُ</div>
+      <h1>📖 <span>Al-Qur'an</span></h1>
+      <p>Bacalah Al-Quran karena ia akan menjadi syafaat bagi pembacanya di hari kiamat.</p>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">Surah Pilihan</div>
+      </div>
+      <div class="quran-grid">
+        <div class="quran-card">
+          <div class="quran-num">1</div>
+          <div class="quran-title">الْفَاتِحَة</div>
+          <div class="quran-latin">Al-Fatihah — Pembukaan</div>
+          <div class="quran-info">7 ayat • Makkiyah</div>
+        </div>
+        <div class="quran-card">
+          <div class="quran-num">2</div>
+          <div class="quran-title">الْبَقَرَة</div>
+          <div class="quran-latin">Al-Baqarah — Sapi Betina</div>
+          <div class="quran-info">286 ayat • Madaniyah</div>
+        </div>
+        <div class="quran-card">
+          <div class="quran-num">36</div>
+          <div class="quran-title">يٰسٓ</div>
+          <div class="quran-latin">Yasin — Jantung Al-Quran</div>
+          <div class="quran-info">83 ayat • Makkiyah</div>
+        </div>
+        <div class="quran-card">
+          <div class="quran-num">55</div>
+          <div class="quran-title">الرَّحْمَن</div>
+          <div class="quran-latin">Ar-Rahman — Maha Pemurah</div>
+          <div class="quran-info">78 ayat • Madaniyah</div>
+        </div>
+        <div class="quran-card">
+          <div class="quran-num">67</div>
+          <div class="quran-title">الْمُلْك</div>
+          <div class="quran-latin">Al-Mulk — Kerajaan</div>
+          <div class="quran-info">30 ayat • Makkiyah</div>
+        </div>
+        <div class="quran-card">
+          <div class="quran-num">112</div>
+          <div class="quran-title">الْإِخْلَاص</div>
+          <div class="quran-latin">Al-Ikhlas — Kemurnian</div>
+          <div class="quran-info">4 ayat • Makkiyah</div>
+        </div>
+        <div class="quran-card">
+          <div class="quran-num">113</div>
+          <div class="quran-title">الْفَلَق</div>
+          <div class="quran-latin">Al-Falaq — Fajar</div>
+          <div class="quran-info">5 ayat • Makkiyah</div>
+        </div>
+        <div class="quran-card">
+          <div class="quran-num">114</div>
+          <div class="quran-title">النَّاس</div>
+          <div class="quran-latin">An-Nas — Manusia</div>
+          <div class="quran-info">6 ayat • Makkiyah</div>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top:40px;">
+        <div class="section-title">Ilmu Seputar Al-Qur'an</div>
+      </div>
+      <div id="quran-ilmu-container">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIQIH PAGE -->
+  <div class="page" id="page-fiqih">
+    <div class="hero" style="padding-bottom:20px;">
+      <div class="hero-arabic">الْفِقْهُ الْإِسْلَامِيّ</div>
+      <h1>⚖️ Ilmu <span>Fiqih</span></h1>
+      <p>Memahami hukum-hukum Islam agar ibadah kita sah dan diterima Allah SWT.</p>
+    </div>
+    <div class="container">
+      <div id="fiqih-container">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AQIDAH PAGE -->
+  <div class="page" id="page-aqidah">
+    <div class="hero" style="padding-bottom:20px;">
+      <div class="hero-arabic">الْعَقِيدَةُ الإِسْلَامِيَّة</div>
+      <h1>🧠 Ilmu <span>Aqidah</span></h1>
+      <p>Fondasi keimanan seorang Muslim. Luruskan aqidah sebelum beramal.</p>
+    </div>
+    <div class="container">
+      <div id="aqidah-container">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AKHIR ZAMAN PAGE -->
+  <div class="page" id="page-akhir">
+    <div class="hero" style="padding-bottom:20px;">
+      <div class="hero-arabic">أَشْرَاطُ السَّاعَة</div>
+      <h1>🛡️ Fitnah <span>Akhir Zaman</span></h1>
+      <p>Waspadai fitnah akhir zaman dan perkuat iman agar tetap istiqomah di jalan Allah.</p>
+    </div>
+    <div class="container">
+      <div id="akhir-container">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOA PAGE -->
+  <div class="page" id="page-doa">
+    <div class="hero" style="padding-bottom:20px;">
+      <div class="hero-arabic">اَللّهُمَّ اغْفِرْلِي</div>
+      <h1>🤍 Kumpulan <span>Doa</span></h1>
+      <p>Doa adalah senjata orang mukmin. Berdoalah kepada-Nya dengan penuh harap dan ketundukan.</p>
+    </div>
+    <div class="container">
+      <div id="doa-container">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── MOBILE NAV ─────────────────────────── -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-items">
+    <div class="mobile-nav-item active" onclick="showPage('home')" data-nav="home">
+      <span class="icon">🏠</span>
+      <span class="label">HOME</span>
+    </div>
+    <div class="mobile-nav-item" onclick="showPage('dzikir')" data-nav="dzikir">
+      <span class="icon">📿</span>
+      <span class="label">DZIKIR</span>
+    </div>
+    <div class="mobile-nav-item" onclick="showPage('quran')" data-nav="quran">
+      <span class="icon">📖</span>
+      <span class="label">QURAN</span>
+    </div>
+    <div class="mobile-nav-item" onclick="showPage('fiqih')" data-nav="fiqih">
+      <span class="icon">⚖️</span>
+      <span class="label">FIQIH</span>
+    </div>
+    <div class="mobile-nav-item" onclick="showPage('doa')" data-nav="doa">
+      <span class="icon">🤍</span>
+      <span class="label">DOA</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MODAL ─────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-kat" id="modal-kat"></div>
+    <h2 id="modal-title"></h2>
+    <div class="modal-date" id="modal-date"></div>
+    <div class="modal-isi" id="modal-isi"></div>
+  </div>
+</div>
+
+<!-- ── MODE TENANG ───────────────────────── -->
+<div class="calm-overlay" id="calm-overlay">
+  <div class="calm-text" id="calm-text">
+    سُبْحَانَ اللَّهِ وَبِحَمْدِهِ<br>سُبْحَانَ اللَّهِ الْعَظِيمِ
+  </div>
+  <div style="font-size:0.8rem;color:var(--text-muted);font-style:italic;text-align:center;">
+    Subhanallahi wa bihamdihi, Subhanallahil 'azhim
+  </div>
+  <button class="calm-close" onclick="closeCalm()">Keluar Mode Tenang</button>
+</div>
+
+<!-- ── NOTIFICATION ──────────────────────── -->
+<div class="notif" id="notif"></div>
+
+<!-- ── SCROLL TOP ────────────────────────── -->
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let allIlmu = [];
+let activeFilter = '';
+let currentSearch = '';
+let currentPage = 'home';
+
+const dzikirList = [
+  { arabic: 'سُبْحَانَ اللَّه', latin: 'Subhanallah', arti: 'Maha Suci Allah', target: 33 },
+  { arabic: 'الْحَمْدُ لِلَّه', latin: 'Alhamdulillah', arti: 'Segala Puji bagi Allah', target: 33 },
+  { arabic: 'اللَّهُ أَكْبَر', latin: 'Allahu Akbar', arti: 'Allah Maha Besar', target: 33 },
+  { arabic: 'أَسْتَغْفِرُ اللَّه', latin: 'Astaghfirullah', arti: 'Aku memohon ampun kepada Allah', target: 100 },
+  { arabic: 'لَا إِلَهَ إِلَّا اللَّه', latin: "Laa ilaha illallah", arti: 'Tiada Tuhan selain Allah', target: 100 },
+];
+let currentDzikir = 0;
+let dzikirCount = 0;
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+
+  document.querySelectorAll('#main-nav a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+  document.querySelectorAll('.mobile-nav-item').forEach(a => {
+    a.classList.toggle('active', a.dataset.nav === page);
+  });
+
+  currentPage = page;
+  window.scrollTo({ top: 0 });
+
+  // Load category content
+  if (page === 'dzikir') renderCategoryPage('dzikir-ilmu-container', 'Dzikir');
+  if (page === 'quran') renderCategoryPage('quran-ilmu-container', 'Al-Quran');
+  if (page === 'fiqih') renderCategoryPage('fiqih-container', 'Fiqih');
+  if (page === 'aqidah') renderCategoryPage('aqidah-container', 'Aqidah');
+  if (page === 'akhir') renderCategoryPage('akhir-container', 'Akhir Zaman');
+  if (page === 'doa') renderCategoryPage('doa-container', 'Doa');
+
+  return false;
+}
+
+// ═══════════════════════════════════════
+// LOAD DATA
+// ═══════════════════════════════════════
+async function loadIlmu() {
+  try {
+    const res = await fetch('/api/ilmu');
+    const json = await res.json();
+    allIlmu = json.data || [];
+    document.getElementById('stat-ilmu').textContent = allIlmu.length;
+    renderIlmu(allIlmu);
+    if (currentPage !== 'home') {
+      renderCategoryPage(currentPage + '-container', capitalize(currentPage));
+    }
+    showNotif('✅ Data diperbarui — ' + allIlmu.length + ' ilmu');
+  } catch (e) {
+    document.getElementById('ilmu-container').innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">⚠️</div>
+        <p>Gagal memuat data. Pastikan server berjalan di localhost.</p>
+      </div>`;
+  }
+}
+
+function capitalize(s) {
+  if (s === 'quran') return 'Al-Quran';
+  if (s === 'akhir') return 'Akhir Zaman';
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+function renderIlmu(data) {
+  const container = document.getElementById('ilmu-container');
+  if (!data || data.length === 0) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">📭</div>
+        <p>Belum ada ilmu dalam kategori ini.<br>Tambahkan melalui Telegram Bot.</p>
+      </div>`;
+    return;
+  }
+  container.innerHTML = `<div class="ilmu-grid">${data.map(cardHTML).join('')}</div>`;
+}
+
+function renderCategoryPage(containerId, kategori) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const filtered = allIlmu.filter(d => d.kategori === kategori);
+  if (filtered.length === 0) {
+    el.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">📭</div>
+        <p>Belum ada ilmu kategori ${kategori}.<br>Tambahkan melalui Telegram Bot.</p>
+      </div>`;
+    return;
+  }
+  el.innerHTML = `<div class="ilmu-grid">${filtered.map(cardHTML).join('')}</div>`;
+}
+
+function cardHTML(d) {
+  const katClass = {
+    'Dzikir': 'kat-dzikir',
+    'Al-Quran': 'kat-alquran',
+    'Fiqih': 'kat-fiqih',
+    'Aqidah': 'kat-aqidah',
+    'Akhir Zaman': 'kat-akhir',
+    'Doa': 'kat-doa',
+  }[d.kategori] || 'kat-fiqih';
+
+  const icons = {
+    'Dzikir':'📿','Al-Quran':'📖','Fiqih':'⚖️','Aqidah':'🧠','Akhir Zaman':'🛡️','Doa':'🤍'
+  };
+
+  return `
+  <div class="card" onclick="openModal('${escapeId(d.id)}')">
+    <div class="card-top">
+      <span class="card-kategori ${katClass}">${icons[d.kategori] || ''} ${d.kategori}</span>
+      <span class="card-date">${d.tanggal}</span>
+    </div>
+    <h3>${escapeHTML(d.judul)}</h3>
+    <p>${escapeHTML(d.isi)}</p>
+    <div class="card-footer">
+      <button class="btn-read">Baca selengkapnya →</button>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// FILTER & SEARCH
+// ═══════════════════════════════════════
+function filterIlmu(kategori, btn) {
+  activeFilter = kategori;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function searchIlmu(query) {
+  currentSearch = query.toLowerCase();
+  applyFilters();
+}
+
+function applyFilters() {
+  let data = allIlmu;
+  if (activeFilter) data = data.filter(d => d.kategori === activeFilter);
+  if (currentSearch) data = data.filter(d =>
+    d.judul.toLowerCase().includes(currentSearch) ||
+    d.isi.toLowerCase().includes(currentSearch) ||
+    d.kategori.toLowerCase().includes(currentSearch)
+  );
+  renderIlmu(data);
+}
+
+// ═══════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════
+function openModal(id) {
+  const d = allIlmu.find(x => x.id === id);
+  if (!d) return;
+  const katClass = { 'Dzikir':'kat-dzikir','Al-Quran':'kat-alquran','Fiqih':'kat-fiqih','Aqidah':'kat-aqidah','Akhir Zaman':'kat-akhir','Doa':'kat-doa'}[d.kategori] || '';
+  const icons = {'Dzikir':'📿','Al-Quran':'📖','Fiqih':'⚖️','Aqidah':'🧠','Akhir Zaman':'🛡️','Doa':'🤍'};
+  document.getElementById('modal-kat').innerHTML = `<span class="card-kategori ${katClass}">${icons[d.kategori]||''} ${d.kategori}</span>`;
+  document.getElementById('modal-title').textContent = d.judul;
+  document.getElementById('modal-date').textContent = '📅 ' + d.tanggal;
+  document.getElementById('modal-isi').textContent = d.isi;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ═══════════════════════════════════════
+// DZIKIR COUNTER
+// ═══════════════════════════════════════
+function setDzikir(idx, btn) {
+  currentDzikir = idx;
+  dzikirCount = 0;
+  updateDzikirUI();
+  document.querySelectorAll('.dzikir-sel-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function tapDzikir() {
+  dzikirCount++;
+  updateDzikirUI();
+  const d = dzikirList[currentDzikir];
+  if (dzikirCount === d.target) {
+    showNotif('✅ Dzikir ' + d.latin + ' ' + d.target + 'x selesai! 🌙');
+  }
+}
+
+function resetDzikir() {
+  dzikirCount = 0;
+  updateDzikirUI();
+}
+
+function updateDzikirUI() {
+  const d = dzikirList[currentDzikir];
+  document.getElementById('dzikir-arabic').textContent = d.arabic;
+  document.getElementById('dzikir-latin').textContent = d.latin;
+  document.getElementById('dzikir-arti').textContent = d.arti;
+  document.getElementById('dzikir-target').textContent = 'Target: ' + d.target + 'x';
+  document.getElementById('dzikir-count').textContent = dzikirCount;
+  const pct = Math.min((dzikirCount / d.target) * 100, 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  const sesi = Math.floor(dzikirCount / d.target);
+  document.getElementById('dzikir-session').textContent = sesi > 0 ? sesi + ' putaran selesai' : 'sesi ini';
+}
+
+// ═══════════════════════════════════════
+// DARK / LIGHT MODE
+// ═══════════════════════════════════════
+function toggleDark() {
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+}
+
+// ═══════════════════════════════════════
+// MODE TENANG
+// ═══════════════════════════════════════
+function openCalm() {
+  document.getElementById('calm-overlay').classList.add('active');
+}
+function closeCalm() {
+  document.getElementById('calm-overlay').classList.remove('active');
+}
+
+// ═══════════════════════════════════════
+// NOTIFICATION
+// ═══════════════════════════════════════
+let notifTimer;
+function showNotif(msg) {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(notifTimer);
+  notifTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════
+// EVENT ISLAM BANNER
+// ═══════════════════════════════════════
+function checkIslamicEvent() {
+  const now = new Date();
+  const m = now.getMonth() + 1;
+  const d = now.getDate();
+  const events = {
+    banner: null,
+  };
+  // Contoh tanggal Islam (Hijriyah bergantung tahun, ini Masehi approx)
+  if (m === 3 && d >= 1 && d <= 30) events.banner = '🌙 Selamat Menyambut Bulan Suci Ramadhan — Semoga ibadah kita diterima Allah SWT';
+  if (m === 4 && d >= 1 && d <= 3) events.banner = '🎉 Selamat Hari Raya Idul Fitri 1446H — Minal Aidin Wal Faizin';
+  if (m === 6 && d >= 10 && d <= 13) events.banner = '🐄 Selamat Hari Raya Idul Adha — Semoga kurban kita diterima';
+
+  if (events.banner) {
+    const banner = document.getElementById('event-banner');
+    banner.textContent = events.banner;
+    banner.style.display = 'block';
+  }
+}
+
+// ═══════════════════════════════════════
+// HELPER
+// ═══════════════════════════════════════
+function escapeHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escapeId(s) { return String(s).replace(/'/g, "\\'"); }
+
+// Scroll to top
+window.addEventListener('scroll', () => {
+  document.getElementById('scroll-top').classList.toggle('show', window.scrollY > 300);
+});
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeCalm();
+  }
+  if (e.key === ' ' && currentPage === 'dzikir') {
+    e.preventDefault();
+    tapDzikir();
+  }
+});
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+(function init() {
+  // Restore theme
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+  }
+  checkIslamicEvent();
+  loadIlmu();
+  updateDzikirUI();
+
+  // Auto-refresh tiap 30 detik
+  setInterval(loadIlmu, 30000);
+})();
+</script>
+</body>
+</html>
